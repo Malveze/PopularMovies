@@ -14,6 +14,7 @@ import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 
+import butterknife.BindString;
 import ui.adapter.MoviesListAdapter;
 import com.example.android.popularmovies.R;
 import ui.view.HomeMovieView;
@@ -34,18 +35,31 @@ public class HomeMovieActivity extends AppCompatActivity implements HomeMovieVie
     @BindView(R.id.list_movie_recycler_view)
     RecyclerView listMovieRecyclerView;
 
-    @BindView(R.id.linear_image_left)
-    LinearLayout imageLeft;
+    @BindString(R.string.movie_request_base_url)
+    String BASE_URL;
 
-    @BindView(R.id.linear_image_right)
-    LinearLayout imageRight;
+    @BindString(R.string.api_key)
+    String apiKey;
+
+    @BindString(R.string.bundle_title_parameter)
+    String titleParameter;
+
+    @BindString(R.string.bundle_poster_parameter)
+    String posterParameter;
+
+    @BindString(R.string.bundle_overview_parameter)
+    String overViewParameter;
+
+    @BindString(R.string.bundle_releaseDate_parameter)
+    String releaseDateParameter;
+
+    @BindString(R.string.bundle_trailer_parameter)
+    String trailerParameter;
 
     private Toolbar toolbar;
     private RecyclerView recyclerView;
     private LinearLayoutManager layoutManager;
     private RecyclerView.Adapter adapter;
-    private Display display;
-    private Point size;
     private HomeMoviePresenter presenter;
 
     @Override
@@ -59,12 +73,13 @@ public class HomeMovieActivity extends AppCompatActivity implements HomeMovieVie
 
         presenter = new HomeMoviePresenterImpl();
 
-        presenter.onCreate(this, getApplicationContext());
+        presenter.onCreate(this, getApplicationContext(), BASE_URL, apiKey, titleParameter,
+                posterParameter, overViewParameter, releaseDateParameter, trailerParameter);
     }
 
     @Override
-    public void onItemClickListener(int itemClicked) {
-        presenter.openMovieDetail(itemClicked);
+    public void onItemClickListener(int itemClicked, boolean imageLeftClicked) {
+        presenter.openMovieDetail(itemClicked, imageLeftClicked);
     }
 
     @Override
@@ -84,18 +99,13 @@ public class HomeMovieActivity extends AppCompatActivity implements HomeMovieVie
                 // If we got here, the user's action was not recognized.
                 // Invoke the superclass to handle it.
                 return super.onOptionsItemSelected(item);
-
         }
     }
 
     @Override
-    public void initialyzeRecyclerView(List<Movie> movies, List<String> postersLeft, List<String> postersRight) {
+    public void initialyzeRecyclerView(List<Movie> movies, List<Movie> moviesLeft, List<Movie> moviesRight) {
         progressBar.setVisibility(View.GONE);
         listMovieRecyclerView.setVisibility(View.VISIBLE);
-
-        display = getWindowManager().getDefaultDisplay();
-        size = new Point();
-        display.getSize(size);
 
         recyclerView = (RecyclerView)findViewById(R.id.list_movie_recycler_view);
         toolbar = (Toolbar)findViewById(R.id.toolbar);
@@ -104,7 +114,7 @@ public class HomeMovieActivity extends AppCompatActivity implements HomeMovieVie
         layoutManager = new LinearLayoutManager(this);
         recyclerView.setLayoutManager(layoutManager);
 
-        adapter = new MoviesListAdapter(this, getApplicationContext(), postersLeft, postersRight);
+        adapter = new MoviesListAdapter(this, getApplicationContext(), moviesLeft, moviesRight);
         recyclerView.setAdapter(adapter);
     }
 

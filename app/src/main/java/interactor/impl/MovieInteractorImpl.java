@@ -1,7 +1,12 @@
 package interactor.impl;
 
+import com.example.android.popularmovies.R;
+
 import java.util.List;
 
+import butterknife.BindString;
+import butterknife.BindView;
+import butterknife.ButterKnife;
 import interactor.MovieInteractor;
 import presenter.HomeMoviePresenter;
 import presenter.impl.HomeMoviePresenterImpl;
@@ -20,12 +25,16 @@ import service.model.MoviesModel;
 
 public class MovieInteractorImpl implements MovieInteractor {
 
-    private String BASE_URL = "https://api.themoviedb.org/";
+    String BASE_URL;
+    String apiKey;
+
     private List<Movie> movies;
     private HomeMoviePresenter presenter;
 
-    public MovieInteractorImpl(HomeMoviePresenterImpl homeMoviePresenterImpl){
+    public MovieInteractorImpl(HomeMoviePresenterImpl homeMoviePresenterImpl, String BASE_URL, String apiKey){
         this.presenter = homeMoviePresenterImpl;
+        this.BASE_URL = BASE_URL;
+        this.apiKey = apiKey;
     }
 
     @Override
@@ -37,7 +46,7 @@ public class MovieInteractorImpl implements MovieInteractor {
 
         Services services = retrofit.create(Services.class);
 
-        Call<MoviesModel> call = services.listRepos("275c002942c27c1e0a25440d6d994635");
+        Call<MoviesModel> call = services.listRepos(apiKey);
         call.enqueue(new Callback<MoviesModel>() {
             @Override
             public void onResponse(Call<MoviesModel> call, Response<MoviesModel> response) {

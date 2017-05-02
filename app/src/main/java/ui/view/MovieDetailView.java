@@ -5,5 +5,6 @@ package ui.view;
  */
 
 public interface MovieDetailView {
-    void populateMovieDetail();
+    void populateMovieDetail(String movieYear);
+    void showNoTrailerMessage();
 }

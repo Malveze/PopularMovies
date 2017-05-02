@@ -5,5 +5,5 @@ package presenter;
  */
 
 public interface MovieDetailPresenter {
-    void onCreate();
+    void onCreate(String releaseDate, Boolean hasTrailer);
 }

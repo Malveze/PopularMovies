@@ -12,6 +12,6 @@ import service.model.Movie;
 
 public interface HomeMovieView {
 
-    void initialyzeRecyclerView(List<Movie> movies, List<String> postersLeft, List<String> postersRight);
+    void initialyzeRecyclerView(List<Movie> movies, List<Movie> postersLeft, List<Movie> postersRight);
     void openDetailActivity(Bundle bundle);
 }

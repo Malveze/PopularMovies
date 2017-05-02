@@ -5,6 +5,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -12,6 +13,9 @@ import com.example.android.popularmovies.R;
 import com.google.android.gms.common.api.GoogleApiClient;
 import com.squareup.picasso.Picasso;
 
+import java.util.Date;
+
+import butterknife.BindString;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import presenter.MovieDetailPresenter;
@@ -29,6 +33,7 @@ public class MovieDetailActivity extends AppCompatActivity implements MovieDetai
     private String overview;
     private String poster;
     private String releaseDate;
+    private Boolean hasTrailer;
     private GoogleApiClient client;
     private MovieDetailPresenter presenter;
 
@@ -44,6 +49,30 @@ public class MovieDetailActivity extends AppCompatActivity implements MovieDetai
     @BindView(R.id.movie_release_date)
     TextView movieReleaseDate;
 
+    @BindView(R.id.no_trailer_text)
+    TextView noTrailerMessage;
+
+    @BindString(R.string.poster_base_url)
+    String posterBaseUrl;
+
+    @BindString(R.string.movie_detail_title)
+    String movieDetailTitle;
+
+    @BindString(R.string.bundle_title_parameter)
+    String titleParameter;
+
+    @BindString(R.string.bundle_poster_parameter)
+    String posterParameter;
+
+    @BindString(R.string.bundle_overview_parameter)
+    String overViewParameter;
+
+    @BindString(R.string.bundle_releaseDate_parameter)
+    String releaseDateParameter;
+
+    @BindString(R.string.bundle_trailer_parameter)
+    String trailerParameter;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -51,13 +80,14 @@ public class MovieDetailActivity extends AppCompatActivity implements MovieDetai
 
         ButterKnife.bind(this);
 
-        title = getIntent().getExtras().getString("title");
-        poster = getIntent().getExtras().getString("poster");
-        overview = getIntent().getExtras().getString("overview");
-        releaseDate = getIntent().getExtras().getString("releaseDate");
+        title = getIntent().getExtras().getString(titleParameter);
+        poster = getIntent().getExtras().getString(posterParameter);
+        overview = getIntent().getExtras().getString(overViewParameter);
+        releaseDate = getIntent().getExtras().getString(releaseDateParameter);
+        hasTrailer = getIntent().getExtras().getBoolean(trailerParameter);
 
         toolbar = (Toolbar) findViewById(R.id.toolbar);
-        toolbar.setTitle("MovieDetail");
+        toolbar.setTitle(movieDetailTitle);
         setSupportActionBar(toolbar);
 
         // add back arrow to toolbar
@@ -67,7 +97,7 @@ public class MovieDetailActivity extends AppCompatActivity implements MovieDetai
         }
 
         presenter = new MovieDetailPresenterImpl(this);
-        presenter.onCreate();
+        presenter.onCreate(releaseDate, hasTrailer);
     }
 
     @Override
@@ -92,10 +122,15 @@ public class MovieDetailActivity extends AppCompatActivity implements MovieDetai
     }
 
     @Override
-    public void populateMovieDetail() {
+    public void populateMovieDetail(String movieYear) {
         movieTitle.setText(title);
         movieDescription.setText(overview);
-        movieReleaseDate.setText(releaseDate);
-        Picasso.with(this).load("http://image.tmdb.org/t/p/w185/" + poster).into(moviePoster);
+        movieReleaseDate.setText(movieYear);
+        Picasso.with(this).load(posterBaseUrl + poster).into(moviePoster);
+    }
+
+    @Override
+    public void showNoTrailerMessage() {
+        noTrailerMessage.setVisibility(View.VISIBLE);
     }
 }
