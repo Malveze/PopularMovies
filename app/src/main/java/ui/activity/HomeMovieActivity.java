@@ -1,17 +1,14 @@
 package ui.activity;
 
 import android.content.Intent;
-import android.graphics.Point;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
-import android.view.Display;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 
 import butterknife.BindString;
@@ -25,7 +22,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import presenter.HomeMoviePresenter;
 import presenter.impl.HomeMoviePresenterImpl;
-import service.model.Movie;
+import model.Movie;
 
 public class HomeMovieActivity extends AppCompatActivity implements HomeMovieView, MoviesListAdapter.ListItemClickListener{
 
@@ -53,6 +50,9 @@ public class HomeMovieActivity extends AppCompatActivity implements HomeMovieVie
     @BindString(R.string.bundle_releaseDate_parameter)
     String releaseDateParameter;
 
+    @BindString(R.string.bundle_user_rating)
+    String userRating;
+
     @BindString(R.string.bundle_trailer_parameter)
     String trailerParameter;
 
@@ -74,7 +74,7 @@ public class HomeMovieActivity extends AppCompatActivity implements HomeMovieVie
         presenter = new HomeMoviePresenterImpl();
 
         presenter.onCreate(this, getApplicationContext(), BASE_URL, apiKey, titleParameter,
-                posterParameter, overViewParameter, releaseDateParameter, trailerParameter);
+                posterParameter, overViewParameter, releaseDateParameter, trailerParameter, userRating);
     }
 
     @Override
@@ -94,6 +94,12 @@ public class HomeMovieActivity extends AppCompatActivity implements HomeMovieVie
         switch (item.getItemId()) {
             case R.id.action_settings:
                 // User chose the "Settings" item, show the app settings UI...
+                return true;
+            case R.id.sort_by_most_popular:
+                presenter.sortByMostPopular();
+                return true;
+            case R.id.sort_by_top_rated:
+                presenter.sorteByTopRated();
                 return true;
             default:
                 // If we got here, the user's action was not recognized.
@@ -115,6 +121,13 @@ public class HomeMovieActivity extends AppCompatActivity implements HomeMovieVie
         recyclerView.setLayoutManager(layoutManager);
 
         adapter = new MoviesListAdapter(this, getApplicationContext(), moviesLeft, moviesRight);
+        recyclerView.setAdapter(adapter);
+    }
+
+    @Override
+    public void reloadRecyclerView(List<Movie> movies, List<Movie> moviesLeft, List<Movie> moviesRight) {
+        adapter = new MoviesListAdapter(this, getApplicationContext(), moviesLeft, moviesRight);
+        adapter.notifyDataSetChanged();
         recyclerView.setAdapter(adapter);
     }
 

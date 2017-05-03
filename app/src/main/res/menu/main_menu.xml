@@ -7,4 +7,12 @@
         android:title="@string/settings"
         app:showAsAction="never"/>
 
+    <item android:id="@+id/sort_by_most_popular"
+        android:title="@string/most_popular"
+        app:showAsAction="never"/>
+
+    <item android:id="@+id/sort_by_top_rated"
+        android:title="@string/top_rated"
+        app:showAsAction="never"/>
+
 </menu>

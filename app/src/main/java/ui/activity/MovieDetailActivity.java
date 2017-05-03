@@ -13,6 +13,8 @@ import com.example.android.popularmovies.R;
 import com.google.android.gms.common.api.GoogleApiClient;
 import com.squareup.picasso.Picasso;
 
+import org.w3c.dom.Text;
+
 import java.util.Date;
 
 import butterknife.BindString;
@@ -33,6 +35,7 @@ public class MovieDetailActivity extends AppCompatActivity implements MovieDetai
     private String overview;
     private String poster;
     private String releaseDate;
+    private Double userRating;
     private Boolean hasTrailer;
     private GoogleApiClient client;
     private MovieDetailPresenter presenter;
@@ -51,6 +54,9 @@ public class MovieDetailActivity extends AppCompatActivity implements MovieDetai
 
     @BindView(R.id.no_trailer_text)
     TextView noTrailerMessage;
+
+    @BindView(R.id.user_rating)
+    TextView userRatingTextView;
 
     @BindString(R.string.poster_base_url)
     String posterBaseUrl;
@@ -73,6 +79,9 @@ public class MovieDetailActivity extends AppCompatActivity implements MovieDetai
     @BindString(R.string.bundle_trailer_parameter)
     String trailerParameter;
 
+    @BindString(R.string.bundle_user_rating)
+    String userRatingParameter;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -85,6 +94,7 @@ public class MovieDetailActivity extends AppCompatActivity implements MovieDetai
         overview = getIntent().getExtras().getString(overViewParameter);
         releaseDate = getIntent().getExtras().getString(releaseDateParameter);
         hasTrailer = getIntent().getExtras().getBoolean(trailerParameter);
+        userRating = getIntent().getExtras().getDouble(userRatingParameter);
 
         toolbar = (Toolbar) findViewById(R.id.toolbar);
         toolbar.setTitle(movieDetailTitle);
@@ -126,6 +136,7 @@ public class MovieDetailActivity extends AppCompatActivity implements MovieDetai
         movieTitle.setText(title);
         movieDescription.setText(overview);
         movieReleaseDate.setText(movieYear);
+        userRatingTextView.setText(String.valueOf(userRating));
         Picasso.with(this).load(posterBaseUrl + poster).into(moviePoster);
     }
 

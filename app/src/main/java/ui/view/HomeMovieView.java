@@ -4,7 +4,7 @@ import android.os.Bundle;
 
 import java.util.List;
 
-import service.model.Movie;
+import model.Movie;
 
 /**
  * Created by henriquemalvezecardoso on 24/04/17.
@@ -12,6 +12,7 @@ import service.model.Movie;
 
 public interface HomeMovieView {
 
-    void initialyzeRecyclerView(List<Movie> movies, List<Movie> postersLeft, List<Movie> postersRight);
+    void initialyzeRecyclerView(List<Movie> movies, List<Movie> moviesLeft, List<Movie> moviesRight);
+    void reloadRecyclerView(List<Movie> movies, List<Movie> moviesLeft, List<Movie> moviesRight);
     void openDetailActivity(Bundle bundle);
 }

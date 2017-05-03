@@ -2,7 +2,7 @@ package interactor;
 
 import java.util.List;
 
-import service.model.Movie;
+import model.Movie;
 
 /**
  * Created by henriquemalvezecardoso on 11/04/17.

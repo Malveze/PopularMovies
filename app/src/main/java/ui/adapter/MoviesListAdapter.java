@@ -13,7 +13,7 @@ import com.squareup.picasso.Picasso;
 
 import java.util.List;
 
-import service.model.Movie;
+import model.Movie;
 
 /**
  * Created by henriquemalvezecardoso on 05/04/17.

@@ -1,12 +1,7 @@
 package interactor.impl;
 
-import com.example.android.popularmovies.R;
-
 import java.util.List;
 
-import butterknife.BindString;
-import butterknife.BindView;
-import butterknife.ButterKnife;
 import interactor.MovieInteractor;
 import presenter.HomeMoviePresenter;
 import presenter.impl.HomeMoviePresenterImpl;
@@ -16,8 +11,8 @@ import retrofit2.Response;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 import service.Services;
-import service.model.Movie;
-import service.model.MoviesModel;
+import model.Movie;
+import model.MoviesModel;
 
 /**
  * Created by henriquemalvezecardoso on 11/04/17.
