@@ -69,8 +69,6 @@ public class HomeMovieActivity extends AppCompatActivity implements HomeMovieVie
 
         ButterKnife.bind(this);
 
-        progressBar.setVisibility(View.VISIBLE);
-
         presenter = new HomeMoviePresenterImpl();
 
         presenter.onCreate(this, getApplicationContext(), BASE_URL, apiKey, titleParameter,
@@ -125,16 +123,21 @@ public class HomeMovieActivity extends AppCompatActivity implements HomeMovieVie
     }
 
     @Override
-    public void reloadRecyclerView(List<Movie> movies, List<Movie> moviesLeft, List<Movie> moviesRight) {
-        adapter = new MoviesListAdapter(this, getApplicationContext(), moviesLeft, moviesRight);
-        adapter.notifyDataSetChanged();
-        recyclerView.setAdapter(adapter);
-    }
-
-    @Override
     public void openDetailActivity(Bundle bundle) {
         Intent intent = new Intent(this, MovieDetailActivity.class);
         intent.putExtras(bundle);
         startActivity(intent);
+    }
+
+    @Override
+    public void hideProgressBar(){
+        progressBar.setVisibility(View.GONE);
+        listMovieRecyclerView.setVisibility(View.VISIBLE);
+    }
+
+    @Override
+    public void showProgressBar(){
+        progressBar.setVisibility(View.VISIBLE);
+        listMovieRecyclerView.setVisibility(View.GONE);
     }
 }

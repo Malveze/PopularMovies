@@ -36,6 +36,9 @@ public class HomeMoviePresenterImpl implements HomeMoviePresenter {
     public void onCreate(HomeMovieView view, Context applicationContext, String BASE_URL, String apiKey,
                          String titleParameter, String posterParameter, String overViewParameter, String releaseDateParameter,
                          String trailerParameter, String userRating) {
+
+        view.showProgressBar();
+
         homeMovieInteractor = new MovieInteractorImpl(this, BASE_URL, apiKey);
         this.titleParameter = titleParameter;
         this.posterParameter = posterParameter;
@@ -45,12 +48,15 @@ public class HomeMoviePresenterImpl implements HomeMoviePresenter {
         this.userRating = userRating;
         this.view = view;
         this.applicationContext = applicationContext;
-        getMovies();
+        getMoviesByPopularity();
     }
 
     @Override
     public void populateView(List<Movie> movies) {
         this.movies = movies;
+        moviesRight.clear();
+        moviesLeft.clear();
+
         for(int i=0; i<movies.size(); i++){
             if((i % 2) == 0){
                 moviesRight.add(movies.get(i));
@@ -59,6 +65,7 @@ public class HomeMoviePresenterImpl implements HomeMoviePresenter {
             }
         }
 
+        view.hideProgressBar();
         view.initialyzeRecyclerView(movies, moviesLeft, moviesRight);
     }
 
@@ -87,45 +94,21 @@ public class HomeMoviePresenterImpl implements HomeMoviePresenter {
 
     @Override
     public void sorteByTopRated() {
-        List<Movie> moviesSorted = new ArrayList<>();
-        Movie movieFixedPostion;
-        Movie movieCurrentPostion;
-        moviesSorted.addAll(movies);
-
-        for(int i=0; i<movies.size(); i++){
-            for(int j=i; j<movies.size(); j++){
-                if(moviesSorted.get(j).getVoteAverage() > moviesSorted.get(i).getVoteAverage()){
-                    movieFixedPostion = moviesSorted.get(i);
-                    movieCurrentPostion = moviesSorted.get(j);
-                    moviesSorted.remove(i);
-                    moviesSorted.add(i, movieCurrentPostion);
-                    moviesSorted.remove(j);
-                    moviesSorted.add(j, movieFixedPostion);
-                }
-            }
-        }
-
-        for(int i=0; i<movies.size(); i++){
-            if((i % 2) == 0){
-                moviesRight.add(moviesSorted.get(i));
-            }else{
-                moviesLeft.add(moviesSorted.get(i));
-            }
-        }
+        view.showProgressBar();
+        getMoviesByTopRated();
     }
 
     @Override
     public void sortByMostPopular() {
-        for(int i=0; i<movies.size(); i++){
-            if((i % 2) == 0){
-                moviesRight.add(movies.get(i));
-            }else{
-                moviesLeft.add(movies.get(i));
-            }
-        }
+        view.showProgressBar();
+        getMoviesByPopularity();
     }
 
-    public void getMovies(){
-        homeMovieInteractor.getMovies();
+    public void getMoviesByPopularity(){
+        homeMovieInteractor.getMoviesByPopularity();
+    }
+
+    public void getMoviesByTopRated(){
+        homeMovieInteractor.getMoviesByTopRated();
     }
 }

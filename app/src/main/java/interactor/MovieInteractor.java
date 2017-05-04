@@ -9,5 +9,6 @@ import model.Movie;
  */
 
 public interface MovieInteractor {
-    List<Movie> getMovies();
+    List<Movie> getMoviesByPopularity();
+    List<Movie> getMoviesByTopRated();
 }

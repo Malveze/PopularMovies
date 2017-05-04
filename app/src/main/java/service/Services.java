@@ -12,5 +12,8 @@ import model.MoviesModel;
 public interface Services {
 
     @GET("3/movie/popular?")
-    Call<MoviesModel> listRepos(@Query("api_key") String key);
+    Call<MoviesModel> getByPopularity(@Query("api_key") String key);
+
+    @GET("3/movie/top_rated?")
+    Call<MoviesModel> getByTopRated(@Query("api_key") String key);
 }

@@ -135,7 +135,7 @@ public class MovieDetailActivity extends AppCompatActivity implements MovieDetai
     public void populateMovieDetail(String movieYear) {
         movieTitle.setText(title);
         movieDescription.setText(overview);
-        movieReleaseDate.setText(movieYear);
+        movieReleaseDate.setText(releaseDate);
         userRatingTextView.setText(String.valueOf(userRating));
         Picasso.with(this).load(posterBaseUrl + poster).into(moviePoster);
     }

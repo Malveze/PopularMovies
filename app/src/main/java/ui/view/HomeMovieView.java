@@ -13,6 +13,7 @@ import model.Movie;
 public interface HomeMovieView {
 
     void initialyzeRecyclerView(List<Movie> movies, List<Movie> moviesLeft, List<Movie> moviesRight);
-    void reloadRecyclerView(List<Movie> movies, List<Movie> moviesLeft, List<Movie> moviesRight);
     void openDetailActivity(Bundle bundle);
+    void hideProgressBar();
+    void showProgressBar();
 }

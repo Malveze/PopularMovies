@@ -33,7 +33,7 @@ public class MovieInteractorImpl implements MovieInteractor {
     }
 
     @Override
-    public List<Movie> getMovies() {
+    public List<Movie> getMoviesByPopularity() {
         Retrofit retrofit = new Retrofit.Builder()
                 .baseUrl(BASE_URL)
                 .addConverterFactory(GsonConverterFactory.create())
@@ -41,7 +41,35 @@ public class MovieInteractorImpl implements MovieInteractor {
 
         Services services = retrofit.create(Services.class);
 
-        Call<MoviesModel> call = services.listRepos(apiKey);
+        Call<MoviesModel> call = services.getByPopularity(apiKey);
+        call.enqueue(new Callback<MoviesModel>() {
+            @Override
+            public void onResponse(Call<MoviesModel> call, Response<MoviesModel> response) {
+                if(response.isSuccessful()){
+                    movies = response.body().getResults();
+                    presenter.populateView(movies);
+                }
+            }
+
+            @Override
+            public void onFailure(Call<MoviesModel> call, Throwable t) {
+
+            }
+        });
+
+        return movies;
+    }
+
+    @Override
+    public List<Movie> getMoviesByTopRated() {
+        Retrofit retrofit = new Retrofit.Builder()
+                .baseUrl(BASE_URL)
+                .addConverterFactory(GsonConverterFactory.create())
+                .build();
+
+        Services services = retrofit.create(Services.class);
+
+        Call<MoviesModel> call = services.getByTopRated(apiKey);
         call.enqueue(new Callback<MoviesModel>() {
             @Override
             public void onResponse(Call<MoviesModel> call, Response<MoviesModel> response) {
