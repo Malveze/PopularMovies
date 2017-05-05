@@ -4,7 +4,6 @@
     <string name="most_popular">Most Popular</string>
     <string name="top_rated">Top Rated</string>
     <string name="movie_request_base_url">https://api.themoviedb.org/</string>
-    <string name="api_key">275c002942c27c1e0a25440d6d994635</string>
     <string name="poster_base_url">http://image.tmdb.org/t/p/w185/</string>
     <string name="movie_detail_title">MovieDetail</string>
     <string name="bundle_title_parameter">title</string>

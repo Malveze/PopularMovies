@@ -13,6 +13,8 @@ import android.widget.RelativeLayout;
 
 import butterknife.BindString;
 import ui.adapter.MoviesListAdapter;
+
+import com.example.android.popularmovies.BuildConfig;
 import com.example.android.popularmovies.R;
 import ui.view.HomeMovieView;
 
@@ -35,9 +37,6 @@ public class HomeMovieActivity extends AppCompatActivity implements HomeMovieVie
     @BindString(R.string.movie_request_base_url)
     String BASE_URL;
 
-    @BindString(R.string.api_key)
-    String apiKey;
-
     @BindString(R.string.bundle_title_parameter)
     String titleParameter;
 
@@ -56,6 +55,8 @@ public class HomeMovieActivity extends AppCompatActivity implements HomeMovieVie
     @BindString(R.string.bundle_trailer_parameter)
     String trailerParameter;
 
+    private static final String API_KEY = BuildConfig.API_KEY;
+
     private Toolbar toolbar;
     private RecyclerView recyclerView;
     private LinearLayoutManager layoutManager;
@@ -71,7 +72,7 @@ public class HomeMovieActivity extends AppCompatActivity implements HomeMovieVie
 
         presenter = new HomeMoviePresenterImpl();
 
-        presenter.onCreate(this, getApplicationContext(), BASE_URL, apiKey, titleParameter,
+        presenter.onCreate(this, getApplicationContext(), BASE_URL, API_KEY, titleParameter,
                 posterParameter, overViewParameter, releaseDateParameter, trailerParameter, userRating);
     }
 
