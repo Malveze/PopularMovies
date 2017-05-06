@@ -112,6 +112,6 @@
         android:layout_marginEnd="@dimen/margin_space_20"
         android:textColor="@color/black"
         android:textAlignment="center"
-        android:textSize="@dimen/text_size_10"
+        android:textSize="@dimen/text_size_14"
         android:text="@string/message_no_trailer"/>
 </RelativeLayout>
