@@ -3,13 +3,13 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="horizontal"
     android:layout_width="match_parent"
-    android:layout_height="250dp">
+    android:layout_height="@dimen/layout_space_250">
 
 
     <LinearLayout
         android:id="@+id/linear_image_left"
         android:layout_weight="1"
-        android:layout_width="0dp"
+        android:layout_width="@dimen/layout_space_0"
         android:layout_height="match_parent">
 
         <ImageView
@@ -23,7 +23,7 @@
     <LinearLayout
         android:id="@+id/linear_image_right"
         android:layout_weight="1"
-        android:layout_width="0dp"
+        android:layout_width="@dimen/layout_space_0"
         android:layout_height="match_parent">
 
         <ImageView

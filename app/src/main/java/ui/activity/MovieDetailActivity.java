@@ -1,6 +1,8 @@
 package ui.activity;
 
 import android.os.Bundle;
+import android.support.v4.app.NavUtils;
+import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
@@ -30,7 +32,7 @@ import ui.view.MovieDetailView;
 
 public class MovieDetailActivity extends AppCompatActivity implements MovieDetailView {
 
-    private Toolbar toolbar;
+    private ActionBar actionBar;
     private String title;
     private String overview;
     private String poster;
@@ -57,6 +59,9 @@ public class MovieDetailActivity extends AppCompatActivity implements MovieDetai
 
     @BindView(R.id.user_rating)
     TextView userRatingTextView;
+
+    @BindView(R.id.toolbar)
+    Toolbar toolbar;
 
     @BindString(R.string.poster_base_url)
     String posterBaseUrl;
@@ -96,14 +101,13 @@ public class MovieDetailActivity extends AppCompatActivity implements MovieDetai
         hasTrailer = getIntent().getExtras().getBoolean(trailerParameter);
         userRating = getIntent().getExtras().getDouble(userRatingParameter);
 
-        toolbar = (Toolbar) findViewById(R.id.toolbar);
         toolbar.setTitle(movieDetailTitle);
         setSupportActionBar(toolbar);
 
-        // add back arrow to toolbar
+        actionBar = getSupportActionBar();
+
         if (getSupportActionBar() != null) {
-            getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-            getSupportActionBar().setDisplayShowHomeEnabled(true);
+            actionBar.setDisplayHomeAsUpEnabled(true);
         }
 
         presenter = new MovieDetailPresenterImpl(this);
@@ -122,6 +126,9 @@ public class MovieDetailActivity extends AppCompatActivity implements MovieDetai
         switch (item.getItemId()) {
             case R.id.action_settings:
                 // User chose the "Settings" item, show the app settings UI...
+                return true;
+            case android.R.id.home:
+                onBackPressed();
                 return true;
             default:
                 // If we got here, the user's action was not recognized.
